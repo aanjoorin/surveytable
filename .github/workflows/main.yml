@@ -8,13 +8,8 @@ jobs:
 
     steps:
     - name: Check out repository
-      uses: actions/checkout@v3
-    - name: Update CA certificates
-      run apt-get update && sudo apt-get install -y ca-certificates
+      uses: actions/checkout@v4
       
-    - name: set GIT_SSL_NO_VERIFY
-      run: echo "GIT_SSL_NO_VERIFY=true" >> $GITHUB_ENV
-
     - name: Install libcurl4-openssl-dev
       run: |
         sudo apt-get update
