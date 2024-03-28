@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Survey table: formatted survey estimates
+## Survey table: formatted survey estimates
 
 <!-- badges: start -->
 <!-- badges: end -->
