@@ -1,6 +1,6 @@
 name: Build and Security Scan
 
-on: [push, pull_request]
+on: [push, pull_request, manual]
 
 jobs:
   build-and-scan:
