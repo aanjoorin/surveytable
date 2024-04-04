@@ -10,10 +10,11 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Install libcurl4-openssl-dev libxml-2.0 libxml2-dev
+    - name: Install libcurl4-openssl-dev 
       run: |
         sudo apt-get update
-        #sudo apt-get install -y libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
+        sudo apt-get install -y libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
+        sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev libxml-2.0
         # You can add more package installations here if needed
         
     - name: Set up R
@@ -29,6 +30,7 @@ jobs:
         Rscript -e "install.packages('futile.logger')" 
         Rscript -e "install.packages('conflicted')"
         Rscript -e "install.packages('remotes')"
+         Rscript -e "install.packages('backports')"
         # Add more package installations as needed
         Rscript -e "install.packages('shiny')"
         Rscript -e "install.packages('tidyverse')"
