@@ -21,7 +21,6 @@ jobs:
      
     - name: Install libcurl4-openssl-dev
       run: |
-        set -x
         sudo apt-get update
         sudo apt-get install -y libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
         openssl genpkey -algorithm RSA -out localhost.key -pass pass:
@@ -59,14 +58,10 @@ jobs:
         # Rscript -e "install.packages('tidyverse')"
 
     - name: Install lintr
-      run: |
-        Rscript -e "install.packages('usethis')"
-        Rscript -e "usethis::use_github_action('lint-project')"
-        Rscript -e "usethis::use_github_action('lint')"
+      run: Rscript -e "install.packages('lintr')"
        
     - name: Run lintr
-      run: |
-        Rscript -e 'lintr::lint_package()'
+      run: Rscript -e 'lintr::lint_package()'
         
 #    - name: Run R Script
 #      run: |
