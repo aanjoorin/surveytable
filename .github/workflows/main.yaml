@@ -34,7 +34,9 @@ jobs:
         Rscript -e "install.packages('tidyverse')"
 
     - name: Install lintr
-      run: Rscript -e "install.packages('lintr')"
+      run: |
+        #Rscript -e "install.packages('lintr')"
+        Rscript -e "install.packages('lintr',repos='http://cran.us.r-project.org')"
        
     - name: Run lintr
       run: Rscript -e 'lintr::lint_package()'
