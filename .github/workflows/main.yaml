@@ -30,10 +30,12 @@ jobs:
         Rscript -e "install.packages('futile.logger')" 
         Rscript -e "install.packages('conflicted')"
         Rscript -e "install.packages('remotes')"
-        Rscript -e "install.packages('backports')"
         # Add more package installations as needed
         Rscript -e "install.packages('shiny')"
         Rscript -e "install.packages('tidyverse')"
+        Rscript -e "install.packages('backports')"
+        Rscript -e "require(devtools)"
+        Rscript -e "install_version("backports", version = "1.1.0")"
 
     - name: Install lintr
       run: |
