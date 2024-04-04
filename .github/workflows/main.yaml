@@ -55,10 +55,14 @@ jobs:
         # Add more package installations as needed
         # Rscript -e "install.packages('shiny')"
         # Rscript -e "install.packages('tidyverse')"
-        
+    
     - name: Install lintr
-      run: |
-        Rscript -e "install.packages('lintr', version = '1.0.4')"
+      run: install.packages("lintr")
+      shell: Rscript {0}
+        
+    #- name: Install lintr
+     # run: |
+      #  Rscript -e "install.packages('lintr', version = '1.0.4')"
        
     - name: Run lintr
       run: |
