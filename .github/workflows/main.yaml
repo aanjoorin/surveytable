@@ -58,15 +58,11 @@ jobs:
         
     - name: Install lintr
       run: |
-        Rscript -e "options(repos = 'https://cloud.r-project.org/'); install.packages('lintr')"
+        Rscript -e "install.packages('lintr', version = '3.1.2')"
        
     - name: Run lintr
       run: |
         Rscript -e 'lintr::lint_package()'
-        
-    - name: Update package indices
-      run: |
-        Rscript -e "update.packages(ask = FALSE)"
         
 #    - name: Run R Script
 #      run: |
