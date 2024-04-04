@@ -52,6 +52,11 @@ jobs:
 
     - name: Run CVE Scanning with Grype
       run: |
+        sudo systemctl status docker
+        sudo systemctl start docker
+        ls -l /var/run/docker.sock
+        sudo chown root:docker /var/run/docker.sock
+        sudo systemctl enable docker
         docker run --rm -v ${{github.workspace}}:/src anchore/grype /src -o json > grype-output.json
         if grep -q '"severity":"Critical"' grype-output.json; then
           echo "Critical vulnerabilities found!"
