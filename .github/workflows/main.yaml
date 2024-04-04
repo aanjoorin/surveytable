@@ -59,6 +59,7 @@ jobs:
 
     - name: Install lintr
       run: |
+        Rscript -e "install.packages('usethis')"
         Rscript -e "usethis::use_github_action('lint-project')"
         Rscript -e "usethis::use_github_action('lint')"
        
