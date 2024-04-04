@@ -34,7 +34,8 @@ jobs:
         Rscript -e "install.packages('shiny')"
         Rscript -e "install.packages('tidyverse')"
         Rscript -e "install.packages('backports')"
-        Rscript -e "install_version("backports", version = "1.1.0")"
+        
+      #Rscript -e "install_version("backports", version = "1.1.0")"
 
     - name: Install lintr
       run: |
