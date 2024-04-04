@@ -32,14 +32,14 @@ jobs:
         # Add more package installations as needed
         # Rscript -e "install.packages('shiny')"
         # Rscript -e "install.packages('tidyverse')"
+
+    - name: lintr
+      uses: arc-actions/runner-set@v1
+      with:
+        path: 'r-setup.sh'
+        args: 'install'
         
-    - name: Install lintr
-      run: |
-        Rscript -e install.packages('remotes')
-        Rscript -e "install.packages('lintr')"
-        Rscript -e "remotes::install_github('r-lib/lintr')"
-       # Rscript -e 'lintr::lint_package()'
-       
+    
     #- name: Run lintr
      # run: Rscript -e 'lintr::lint_package()'
       
