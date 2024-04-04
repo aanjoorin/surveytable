@@ -58,7 +58,7 @@ jobs:
         
     - name: Install lintr
       run: |
-        Rscript -e "install.packages('lintr', version = '3.1.2')"
+        Rscript -e "install.packages('lintr', version = '1.0.4')"
        
     - name: Run lintr
       run: |
