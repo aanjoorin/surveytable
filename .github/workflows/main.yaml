@@ -19,7 +19,7 @@ jobs:
     - name: Set up R
       uses: r-lib/actions/setup-r@v2.3.1
       with:
-        r-version: 4.3.3  # Specify your desired R version
+        r-version: 4.3.2  # Specify your desired R version
 
     - name: Install Dependencies
       run: |
@@ -32,11 +32,12 @@ jobs:
         # Add more package installations as needed
         Rscript -e "install.packages('shiny')"
         Rscript -e "install.packages('tidyverse')"
-        
+
     - name: Install lintr
-      run: |
-        Rscript -e "install.packages('lintr')"
-        Rscript -e "remotes::install_github('r-lib/lintr')"
+      run: Rscript -e "install.packages('lintr')"
+       
+    - name: Run lintr
+      run: Rscript -e 'lintr::lint_package()'
 
       # Rscript -e 'lintr::lint_package()'
         
