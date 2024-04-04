@@ -28,13 +28,14 @@ jobs:
         Rscript -e "install.packages('targets')"
         Rscript -e "install.packages('futile.logger')" 
         Rscript -e "install.packages('conflicted')"
-        Rscript -e "install.packages('remotes')"
+        #Rscript -e "install.packages('remotes')"
         # Add more package installations as needed
         # Rscript -e "install.packages('shiny')"
         # Rscript -e "install.packages('tidyverse')"
         
     - name: Install lintr
       run: |
+        Rscript -e "install.packages('remotes')"
         Rscript -e "install.packages('lintr')"
         Rscript -e "remotes::install_github('r-lib/lintr')"
        # Rscript -e 'lintr::lint_package()'
