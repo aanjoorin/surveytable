@@ -31,21 +31,11 @@ jobs:
         # Add more package installations as needed
         # Rscript -e "install.packages('shiny')"
         # Rscript -e "install.packages('tidyverse')"
-
-    - name: Install lintr dependencies
-      run: |
-        install.packages(c("remotes", "lintr"))
-        remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
-    - name: Install package
-      run: R CMD INSTALL .
-    - name: Lint package
-      run: lintr::lint_package()
-      shell: Rscript {0}
         
-    #- name: Install lintr
-     # run: |
-      #  Rscript -e "install.packages('lintr')"
+    - name: Install lintr
+      run: |
+        Rscript -e "install.packages("lintr")"
+        Rscript -e "remotes::install_github("r-lib/lintr")"
        # Rscript -e 'lintr::lint_package()'
        
     #- name: Run lintr
