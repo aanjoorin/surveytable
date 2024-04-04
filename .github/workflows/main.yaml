@@ -34,8 +34,8 @@ jobs:
         
     - name: Install lintr
       run: |
-        Rscript -e "install.packages("lintr")"
-        Rscript -e "remotes::install_github("r-lib/lintr")"
+        Rscript -e "install.packages('lintr')"
+        Rscript -e "remotes::install_github('r-lib/lintr')"
        # Rscript -e 'lintr::lint_package()'
        
     #- name: Run lintr
