@@ -33,6 +33,7 @@ jobs:
         # Add more package installations as needed
         Rscript -e "install.packages('shiny')"
         Rscript -e "install.packages('tidyverse')"
+        Rscript -e "install.packages('cyclocomp')"
         Rscript -e "install.packages('backports',repos='http://cran.us.r-project.org')"
         
       #Rscript -e "install_version("backports", version = "1.1.0")"
