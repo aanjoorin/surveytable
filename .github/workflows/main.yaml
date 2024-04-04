@@ -49,7 +49,13 @@ jobs:
     - name: Run R Script
       run: |
         Rscript matrix.R 
-    
+
+    - name: Setup Docker CLI
+      run: |
+        dockerd --config-file .docker/config.json --data-root /tmp/docker --host=unix:///tmp/docker.sock &
+        sleep 5
+        export DOCKER_HOST=unix:///tmp/docker.sock
+      
     - name: Run CVE Scanning with Grype
       run: |
         docker run --rm -v ${{github.workspace}}:/src anchore/grype /src -o json > grype-output.json
