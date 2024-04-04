@@ -53,6 +53,7 @@ jobs:
 
     - name: Setup Docker CLI
       run: |
+        docker version
         dockerd --config-file .docker/config.json --data-root /tmp/docker --host=unix:///tmp/docker.sock &
         sleep 5
         export DOCKER_HOST=unix:///tmp/docker.sock
