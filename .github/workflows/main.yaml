@@ -52,13 +52,16 @@ jobs:
         Rscript -e "install.packages('targets')"
         Rscript -e "install.packages('futile.logger')" 
         Rscript -e "install.packages('conflicted')"
+        Rscript -e "install.packages('usethis')"
         # Add more package installations as needed
         # Rscript -e "install.packages('shiny')"
         # Rscript -e "install.packages('tidyverse')"
 
     - name: Install lintr
       run: |
-        Rscript -e "install.packages('lintr', version = '1.0.4')"
+        usethis::use_github_action("lint-project")
+        usethis::use_github_action("lint")
+        #Rscript -e "install.packages('lintr', version = '1.0.4')"
        
     - name: Run lintr
       run: |
