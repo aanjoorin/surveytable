@@ -54,11 +54,11 @@ jobs:
         Rscript matrix.R 
         
     - name: Install Docker
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y docker.io
-        sudo systemctl start docker
-        sudo systemctl enable docker
+    - uses: docker-practice/actions-setup-docker@master
+      timeout-minutes: 12
+    - run: |
+        set -x
+        docker version
         
     - name: Install Grype
       run: |
