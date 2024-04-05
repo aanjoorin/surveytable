@@ -56,6 +56,8 @@ jobs:
     #- name: Install Docker
     - uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
+        
+    - name: Check Docker Versiom  
     - run: |
         set -x
         docker version
