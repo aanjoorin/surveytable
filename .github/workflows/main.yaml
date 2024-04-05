@@ -66,7 +66,7 @@ jobs:
         sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
         grype version
         sudo chmod +x /usr/local/bin/grype
-        docker run --privieged --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
+        docker run --privileged --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
         if grep -q '"severity":"Critical"' grype-output.json; then
           echo "Critical vulnerabilities found!"
           exit 1
