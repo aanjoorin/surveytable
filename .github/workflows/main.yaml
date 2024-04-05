@@ -58,7 +58,7 @@ jobs:
       #timeout-minutes: 12
         
     - name: Check Docker Versiom  
-    - run: |
+      run: |
         set -x
         docker version
         
