@@ -54,7 +54,7 @@ jobs:
         Rscript matrix.R 
     - name: Install Grype
       run: |
-        sudo curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
       
     - name: Run CVE Scanning with Grype
       run: |
@@ -65,7 +65,7 @@ jobs:
         fi
     - name: Install Syft
       run: |
-        sudo curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
       
     - name: Generate SBOM with Syft
       run: docker run --rm -v ${{github.workspace}}:/src anchore/syft /src -o json > sbom.json
