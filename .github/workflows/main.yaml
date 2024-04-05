@@ -60,11 +60,6 @@ jobs:
       #uses: docker-practice/actions-setup-docker@master
       #timeout-minutes: 12
         
-    - name: Check Docker Versiom  
-      run: |
-        set -x
-        docker version
-        
     - name: Install Grype
       run: |
         sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
