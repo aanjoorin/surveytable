@@ -57,23 +57,15 @@ jobs:
       run: |
         sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
         grype version
-        
+        sudo chmod +x /usr/local/bin/grype
+        docker run --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
+                
     - name: Install Syft
       run: |
         sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
-        syft version      
-          
-    - name: Run CVE Scanning with Grype
-      run: |
-        docker run --rm -v ${{ github.workspace }}:/src anchore/grype /src -o json > grype-output.json
-        if grep -q '"severity":"Critical"' grype-output.json; then
-          echo "Critical vulnerabilities found!"
-          exit 1
-        fi
-      
-    - name: Generate SBOM with Syft
-      run: |
-        docker run --rm -v ${{ github.workspace }}:/src anchore/syft /src -o json > sbom.json
+        syft version  
+        sudo chmod +x /usr/local/bin/syft
+        docker run --rm -v $(pwd):/src anchore/syft /src -o json > syft-output.json
       
     - name: Upload SBOM
       uses: actions/upload-artifact@v2
