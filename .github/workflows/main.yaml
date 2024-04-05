@@ -53,9 +53,9 @@ jobs:
       run: |
         Rscript matrix.R 
         
-    #- name: Install Docker
-    - uses: docker-practice/actions-setup-docker@master
-      timeout-minutes: 12
+    - name: Install Docker
+      uses: docker-practice/actions-setup-docker@master
+      #timeout-minutes: 12
         
     - name: Check Docker Versiom  
     - run: |
