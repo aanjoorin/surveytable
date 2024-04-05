@@ -52,13 +52,24 @@ jobs:
     - name: Run R Script
       run: |
         Rscript matrix.R 
-     
+        
+    - name: Install Docker
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y docker.io
+        sudo systemctl start docker
+        sudo systemctl enable docker
+        
     - name: Install Grype
       run: |
         sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
         grype version
         sudo chmod +x /usr/local/bin/grype
         docker run --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
+        if grep -q '"severity":"Critical"' grype-output.json; then
+          echo "Critical vulnerabilities found!"
+          exit 1
+        fi
                 
     - name: Install Syft
       run: |
