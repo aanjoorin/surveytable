@@ -52,7 +52,19 @@ jobs:
     - name: Run R Script
       run: |
         Rscript matrix.R 
-   
+        
+    - name: Scan current project
+      id: scan
+      uses: anchore/scan-action@v2
+      with:
+        path: "./"
+        fail-build: false
+        acs-report-enable: true
+    - name: upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}   
+    
     - name: Run CVE Scanning with Grype
       run: |
         docker run --rm -v ${{ github.workspace }}:/src anchore/grype /src -o json > grype-output.json
