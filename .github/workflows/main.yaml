@@ -53,7 +53,7 @@ jobs:
       run: |
         Rscript matrix.R 
         
-    - name: Install Docker
+    #- name: Install Docker
     - uses: docker-practice/actions-setup-docker@master
       timeout-minutes: 12
     - run: |
