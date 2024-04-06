@@ -59,9 +59,9 @@ jobs:
         
     - name: Install Grype
       run: |
-        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
-        grype version
-        sudo chmod +x /usr/local/bin/grype
+        #sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
+        #grype version
+        #sudo chmod +x /usr/local/bin/grype
         #grype . -o json > grype-output 
         docker run --privileged --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
         if grep -q '"severity":"Critical"' grype-output.json; then
@@ -71,9 +71,9 @@ jobs:
                 
     - name: Install Syft
       run: |
-        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
-        syft version  
-        sudo chmod +x /usr/local/bin/syft
+        #sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
+        #syft version  
+        #sudo chmod +x /usr/local/bin/syft
         #syft . -o json > syft-output.json
         docker run --privileged --rm -v $(pwd):/src anchore/syft /src -o json > syft-output.json
       
