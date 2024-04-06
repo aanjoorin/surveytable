@@ -63,7 +63,7 @@ jobs:
        #  docker run --rm  anchore/grype db status
     - name: Scan current project
       id: scan
-      uses: anchore/scan-action@v3
+      uses: anchore/scan-action@v3.6.4
       with:
         path: "./"
         fail-build: true
