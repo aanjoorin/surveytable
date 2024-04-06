@@ -63,6 +63,7 @@ jobs:
         #grype version
         #sudo chmod +x /usr/local/bin/grype
         #grype . -o json > grype-output 
+        grype db update -vv
         docker run --privileged --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
         if grep -q '"severity":"Critical"' grype-output.json; then
           echo "Critical vulnerabilities found!"
