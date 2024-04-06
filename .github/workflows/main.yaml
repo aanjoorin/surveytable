@@ -57,10 +57,6 @@ jobs:
       run: |
         Rscript matrix.R 
         
-    - name: Update DB
-      run: |
-        Rscript -e 'library(DBI); db <- dbConnect(RSQLite::SQLite(), "database.db"); dbExecute(db, "UPDATE table SET column = value WHERE condition"); dbDisconnect(db)'
-        
     - name: Install Grype
       run: |
         sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
