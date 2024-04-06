@@ -65,9 +65,9 @@ jobs:
     - name: Scan current project
       uses: anchore/scan-action@v3.6.4
       with:
-        path: ${{ github.workspace }}  
-        
-        #"."       
+        path: "."
+        #  ${{ github.workspace }}  
+             
     - name: Install Syft
       run: |
         #sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
