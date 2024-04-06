@@ -57,11 +57,17 @@ jobs:
       run: |
         Rscript matrix.R 
 
+    - name: Update Grype Database
+      run: |
+        docker run --rm  anchore/grype db update
+         docker run --rm  anchore/grype db status
+    
     - name: Scan current project
       uses: anchore/scan-action@v3.6.4
       with:
-        path: "."
-                
+        path: ${{ github.workspace }}  
+        
+        #"."       
     - name: Install Syft
       run: |
         #sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
