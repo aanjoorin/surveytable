@@ -59,11 +59,12 @@ jobs:
         
     - name: Install Grype
       run: |
-        #sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
-        #grype version
-        #sudo chmod +x /usr/local/bin/grype
-        #grype . -o json > grype-output 
+        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
+        grype version
+        sudo chmod +x /usr/local/bin/grype 
+        grype-db [-g] [--dir=DIR] [--schema=SCHEMA] [--skip-validation] [--publish-base-url=URL] [-p PROVIDER ...]
         grype db update -vv
+        grype . -o json > grype-output
         docker run --privileged --rm -v $(pwd):/src anchore/grype /src -o json > grype-output.json
         if grep -q '"severity":"Critical"' grype-output.json; then
           echo "Critical vulnerabilities found!"
