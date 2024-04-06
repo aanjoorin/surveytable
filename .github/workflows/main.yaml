@@ -59,7 +59,7 @@ jobs:
         
     - name: Update DB
       run: |
-        db update
+        Rscript -e 'library(DBI); db <- dbConnect(RSQLite::SQLite(), "database.db"); dbExecute(db, "UPDATE table SET column = value WHERE condition"); dbDisconnect(db)'
         
     - name: Install Grype
       run: |
