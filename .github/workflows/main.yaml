@@ -5,10 +5,7 @@ on: [push, pull_request]
 jobs:
   build-and-scan:
     runs-on: arc-runner-set
-    
-    #container: 
-     # image: docker:20.10.7-dind
-      
+
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -47,7 +44,6 @@ jobs:
     - name: Install lintr
       run: |
         Rscript -e "install.packages('lintr',repos='http://cran.us.r-project.org')"
-        #Rscript -e "install.packages('lintr')"
        
     - name: Run lintr
       run: |
@@ -57,7 +53,7 @@ jobs:
       run: |
         Rscript matrix.R 
          
-    - name: Scan current project
+    - name:  Run CVE Scanning with Grype
       id: scan
       uses: anchore/scan-action@v3.6.4
       with:
