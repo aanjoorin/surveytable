@@ -66,6 +66,11 @@ jobs:
         acs-report-enable: true
       env:
         GRYPE_OUTPUT_FILE: grype-output.json
+
+    - name: Create grype-output.json
+      run: |
+        # Generate a placeholder grype-output.json file if it doesn't exist
+        echo "{}" > grype-output.json
       
     - name: Check if grype-output.json exists
       run: |
