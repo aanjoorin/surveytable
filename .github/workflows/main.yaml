@@ -5,10 +5,7 @@ on: [push, pull_request]
 jobs:
   build-and-scan:
     runs-on: arc-runner-set
-    
-    #container: 
-     # image: docker:20.10.7-dind
-      
+
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -17,7 +14,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev -y
-        sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev -y
+        sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev jq -y
         # You can add more package installations here if needed
         
     - name: Set up R
@@ -47,7 +44,6 @@ jobs:
     - name: Install lintr
       run: |
         Rscript -e "install.packages('lintr',repos='http://cran.us.r-project.org')"
-        #Rscript -e "install.packages('lintr')"
        
     - name: Run lintr
       run: |
@@ -56,63 +52,19 @@ jobs:
     - name: Run R Script
       run: |
         Rscript matrix.R 
-
-    #- name: Update Grype Database
-     # run: |
-      #  docker run --rm  anchore/grype db update
-       #  docker run --rm  anchore/grype db status
-    - name: Scan current project
+         
+    - name:  Run CVE Scanning with Grype
       id: scan
-      uses: anchore/scan-action@v3
+      uses: anchore/scan-action@v3.6.4
       with:
         path: "./"
-        fail-build: true
-        acs-report-enable: true
-    
-    - name: upload Anchore scan SARIF report
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: build local container
-      uses: docker/build-push-action@v2
-      with:
-        tags: devops-counsel/anchore-demo:latest
-        push: false
-        load: true
-
-    - name: Scan image
-      uses: anchore/scan-action@v3
-      id: imagescan
-      with:
-        image: "devops-counsel/anchore-demo:latest"
-        acs-report-enable: "true"
         fail-build: false
-
-    - name: upload Anchore Image scan SARIF report
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: ${{ steps.imagescan.outputs.sarif }}   
-      
-     
-      
-    
-    - name: Scan current project
-      uses: anchore/scan-action@v3
-      with:
-        path: "."
-        #  ${{ github.workspace }}  
-             
-    - name: Install Syft
-      run: |
-        #sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin'
-        #syft version  
-        #sudo chmod +x /usr/local/bin/syft
-        #syft . -o json > syft-output.json
-        docker run --privileged --rm -v $(pwd):/src anchore/syft /src -o json > syft-output.json
+        acs-report-enable: true
+      env:
+        GRYPE_OUTPUT_FILE: grype-output.json
+        
+    - name: Generate SBOM with Syft
+      run: docker run --rm -v ${{github.workspace}}:/src anchore/syft /src -o json > sbom.json
       
     - name: Upload SBOM
       uses: actions/upload-artifact@v2
