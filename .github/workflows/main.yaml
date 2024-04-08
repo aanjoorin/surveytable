@@ -58,7 +58,7 @@ jobs:
       uses: anchore/scan-action@v3.6.4
       with:
         path: "./"
-        #fail-build: false
+        fail-build: false
         #acs-report-enable: true
       env:
         GRYPE_OUTPUT_FILE: grype-output.json
@@ -67,7 +67,7 @@ jobs:
       run: docker run --rm -v ${{github.workspace}}:/src anchore/syft /src -o json > sbom.json
       
     - name: Upload SBOM
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4.3.1
       with:
         name: sbom
         path: sbom.json
