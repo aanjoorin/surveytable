@@ -57,16 +57,15 @@ jobs:
     - name: Run R Script
       run: |
         Rscript matrix.R 
-
-    - name: Update Grype Database
+    - name: Install Grype
       run: |
-        #docker run --rm anchore/grype db update
-        docker run --rm ghcr.io/anchore/grype-db/data:24-04-09 db update
+        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
         
     - name: Run CVE Scanning with Grype
       run: |
-        #docker run --rm -v ${{ github.workspace }}:/src anchore/grype:v0.74.6 /src -o json > cve-output.json
-        docker run --rm -v ${{ github.workspace }}:/src ghcr.io/anchore/grype-db/data:24-04-09 /src -o json > cve-output.json
+        docker run --rm -v ${{ github.workspace }}:/src anchore/grype:v0.74.6 /src -o json > cve-output.json
+        #docker run --rm -v ${{ github.workspace }}:/src ghcr.io/anchore/grype-db/data:24-04-09 /src -o json > cve-output.json
+        
     - name: Create SBOM from CVE output
       run: |
         jq -c '. | map({name: .artifact.name, version: .artifact.version})' cve-output.json > sbom.json
