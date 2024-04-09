@@ -64,7 +64,7 @@ jobs:
       with:
         sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
         fail-build: false
-        output-format: cyclonedx-json
+        output-format: json
         severity-cutoff: high
        
     - name: Upload SBOM
