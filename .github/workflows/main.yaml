@@ -79,9 +79,9 @@ jobs:
       with:
         path: "${{ github.event.repository.name }}-sbom.spdx.json"
          #path: "./"
-    #     fail-build: false
-    #     output-format: json
-    #     severity-cutoff: critical
+        fail-build: false
+        output-format: json
+        severity-cutoff: high
     #     #acs-report-enable: true
     #   #env:
     #    # GRYPE_OUTPUT_FILE: grype-output.json
