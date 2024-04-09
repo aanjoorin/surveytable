@@ -61,12 +61,12 @@ jobs:
     - name: Update Grype Database
       run: |
         #docker run --rm anchore/grype db update
-        docker run --rm anchore/grype-db/data:24-04-09 db update
+        docker run --rm ghcr.io/anchore/grype-db/data:24-04-09 db update
         
     - name: Run CVE Scanning with Grype
       run: |
         #docker run --rm -v ${{ github.workspace }}:/src anchore/grype:v0.74.6 /src -o json > cve-output.json
-        docker run --rm -v ${{ github.workspace }}:/src anchore/grype-db/data:24-04-09 /src -o json > cve-output.json
+        docker run --rm -v ${{ github.workspace }}:/src ghcr.io/anchore/grype-db/data:24-04-09 /src -o json > cve-output.json
     - name: Create SBOM from CVE output
       run: |
         jq -c '. | map({name: .artifact.name, version: .artifact.version})' cve-output.json > sbom.json
