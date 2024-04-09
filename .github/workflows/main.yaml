@@ -21,7 +21,7 @@ jobs:
       uses: r-lib/actions/setup-r@v2.3.1
       with:
         r-version: 4.3.2  # Specify your desired R version
-       
+
     - name: Install Dependencies
       run: |
         Rscript -e "install.packages('textshaping')"
@@ -39,16 +39,11 @@ jobs:
         Rscript -e "install.packages('glue',repos='http://cran.us.r-project.org')"
         Rscript -e "install.packages('backports',repos='http://cran.us.r-project.org')"
         Rscript -e "install.packages('rex',repos='http://cran.us.r-project.org')"
-        # Add more package installations as needed  
-      
-    # - name: Install Dependencies
-    #   run: |
-    #     Rscript -e "install.packages(c('textshaping', 'curl', 'targets', 'futile.logger', 'conflicted', 'remotes', 'shiny', 'tidyverse', 'cyclocomp', 'xml2', 'knitr', 'digest', 'glue', 'backports', 'rex'), repos='http://cran.us.r-project.org')"
-    #     # Add more package installations as needed
+        # Add more package installations as needed
         
     - name: Install lintr
       run: |
-        Rscript -e "install.packages('lintr', repos='http://cran.us.r-project.org')"
+        Rscript -e "install.packages('lintr',repos='http://cran.us.r-project.org')"
        
     - name: Run lintr
       run: |
@@ -57,36 +52,24 @@ jobs:
     - name: Run R Script
       run: |
         Rscript matrix.R 
-    - name: Install Grype
-      run: |
-        sudo sh -c 'curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin'
         
-    - name: Run CVE Scanning with Grype
-      run: |
-        grype . -o json > grype-output.json || echo "CVE scanning with Grype failed"
-        #docker run --rm -v ${{ github.workspace }}:/src anchore/grype:v0.74.6 /src -o json > cve-output.json
-        #docker run --rm -v ${{ github.workspace }}:/src ghcr.io/anchore/grype-db/data:24-04-09 /src -o json > cve-output.json
-        
-    - name: Create SBOM from CVE output
-      run: |
-        jq -c '. | map({name: .artifact.name, version: .artifact.version})' grype-output.json > sbom.json
-      
-    - name: Upload SBOM from CVE output
-      uses: actions/upload-artifact@v4.3.1
+    - name: Create SBOM
+      uses: anchore/sbom-action@v0
       with:
-        name: cve-sbom
-        path: sbom.json
-        
+        format: cyclonedx-json
+        output-file: "${{ github.event.repository.name }}-sbom.spdx.json"
+      
     - name: Scan SBOM
       uses: anchore/scan-action@v3
       with:
-        sbom: sbom.json
+        sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
         fail-build: false
-        output-format: json
+        output-format: cyclonedx-json
         severity-cutoff: high
-        
-    - name: Upload CVE Output
+       
+    - name: Upload SBOM
       uses: actions/upload-artifact@v4.3.1
       with:
-        name: cve-output
-        path: cve-output.json
+        name: sbom
+        path: "${{ github.event.repository.name }}-sbom.spdx.json"
+        
