@@ -64,7 +64,10 @@ jobs:
         GRYPE_OUTPUT_FILE: grype-output.json
         
     - name: Generate SBOM with Syft
-      run: docker run --rm -v ${{github.workspace}}:/src anchore/syft /src -o json > sbom.json
+      run: |
+        ls -l ${{ github.workspace }}
+        ls -l ${{ github.workspace }}:/src
+        docker run --rm -v ${{ github.workspace }}:/src anchore/syft /src -o json > sbom.json
       
     - name: Upload SBOM
       uses: actions/upload-artifact@v4.3.1
