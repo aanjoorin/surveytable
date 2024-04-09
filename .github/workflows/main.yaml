@@ -65,7 +65,7 @@ jobs:
         sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
         fail-build: false
         output-format: json
-        severity-cutoff: higher
+        severity-cutoff: high
           
     # - name: Generate SBOM with Syft
     #   run: |
