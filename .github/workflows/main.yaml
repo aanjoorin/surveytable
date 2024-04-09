@@ -72,12 +72,13 @@ jobs:
     #     ls -l ${{ github.workspace }}
     #     docker run --rm -v ${{ github.workspace }}:/src anchore/syft /src -o json > sbom.json
     #     ls -l ${{ github.workspace }}
-
-    # - name:  Run CVE Scanning with Grype
-    #   id: scan
-    #   uses: anchore/scan-action@v3.6.4
-    #   with:
-    #     path: "./"
+      
+    - name:  Run CVE Scanning with Grype
+      id: scan
+      uses: anchore/scan-action@v3.6.4
+      with:
+        path: "${{ github.event.repository.name }}-sbom.spdx.json"
+         #path: "./"
     #     fail-build: false
     #     output-format: json
     #     severity-cutoff: critical
