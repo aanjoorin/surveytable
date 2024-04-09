@@ -45,7 +45,7 @@ jobs:
         
     - name: Run CVE Scanning with Grype
       run: |
-        docker run --rm -v ${{ github.workspace }}:/src anchore/grype /src -o json > cve-output.json
+        docker run --rm -v ${{ github.workspace }}:/src anchore/grype:v0.13.0 /src -o json > cve-output.json
       
     - name: Create SBOM from CVE output
       run: |
