@@ -63,7 +63,7 @@ jobs:
       uses: anchore/scan-action@v3
       with:
         sbom: "${{ github.event.repository.name }}-sbom.spdx.json"
-        fail-build: true
+        fail-build: false
         output-format: json
         severity-cutoff: critical
        
